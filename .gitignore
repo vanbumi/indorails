@@ -18,17 +18,4 @@
 # Ignore database configuration
 config/database.yml
 
-catatan_pengembangan.txt
-/nbproject
-
-pengembangan.txt
-
-# themes
-public/images/themes/*
-!public/images/themes/clean_blog
-!public/images/themes/default
-
-# asset/themes
-app/assets/*
-!app/assets/themes/clean_blog
-!app/assets/themes/default
+nbproject
