@@ -1,6 +1,15 @@
 development:
   adapter: postgresql
   encoding: unicode
+  database: indorails_pro
+  pool: 5
+  username: postgres
+  password: Indorails1945
+  host: localhost
+  
+development:
+  adapter: postgresql
+  encoding: unicode
   database: indorails_dev
   pool: 5
   username: postgres
