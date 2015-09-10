@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 	post 'discuss/send_insert', to: 'discuss#send_insert'
   
   namespace :forum do
-    get    '/',                     to: 'root#index'
+    get    'index',                     to: 'root#index'
     get    'search',                to: 'root#search'
     get    'new_topic',             to: 'root#new_topic'
     post   'new_topic_save',        to: 'root#new_topic_save'
