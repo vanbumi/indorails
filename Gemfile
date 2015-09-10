@@ -3,9 +3,9 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
-# Use sqlite3 as the database for Active Record
-gem 'mysql2'
-# gem 'pg' # just activate this line and deactivate above line if you want to use postgresql
+
+#gem 'mysql2'
+gem 'pg' # just activate this line and deactivate above line if you want to use postgresql
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -57,7 +57,8 @@ gem 'carrierwave'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+#  gem 'byebug'
+gem 'debugger'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'

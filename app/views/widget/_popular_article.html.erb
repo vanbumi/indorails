@@ -5,9 +5,9 @@
 %>
 
 <% if current_user %>
-  <%  @larts = VArticle.where('publish_status = "Publish"').order('article_vcount DESC').take(5) %>
+  <%  @larts = VArticle.where("publish_status = ?", "Publish").order('article_vcount DESC').take(5) %>
 <% else %>
-  <% @larts = VArticle.where('publish_status = "Publish" and publish_visibility = "public"').order('article_vcount DESC').take(5) %>
+  <% @larts = VArticle.where('publish_status = ? and publish_visibility = ?' ,"Publish","Public").order('article_vcount DESC').take(5) %>
 <% end %>
 
 <div id="widget_popular_article" class="panel panel-default">

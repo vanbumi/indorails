@@ -5,9 +5,9 @@
 %>
 
 <% if current_user %>
-  <%  @larts = VArticle.where('publish_status = "Publish"').order('created_at DESC').take(5) %>
+  <%  @larts = VArticle.where("publish_status = ?", "Publish").order('created_at DESC').take(5) %>
 <% else %>
-  <% @larts = VArticle.where('publish_status = "Publish" and publish_visibility = "public"').order('created_at DESC').take(5) %>
+  <% @larts = VArticle.where("publish_status = ? and publish_visibility = ?", "Publish", "Public").order('created_at DESC').take(5) %>
 <% end %>
 
 <div id="widget_recent_article" class="panel panel-default">

@@ -1,20 +1,8 @@
-default: &default
-  adapter: mysql2
-  encoding: utf8
-  pool: 5
-  username: root_dev
-  password: 1234
-  socket: /var/run/mysqld/mysqld.sock
-
 development:
-  <<: *default
-  database: rubysauce_development
-
-
-test:
-  <<: *default
-  database: rubysauce_test
-
-production:
-  <<: *default
-  database: rubysauce_cms
+  adapter: postgresql
+  encoding: unicode
+  database: indorails_dev
+  pool: 5
+  username: postgres
+  password: Indorails1945
+  host: localhost

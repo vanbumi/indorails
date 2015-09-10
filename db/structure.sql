@@ -214,13 +214,8 @@ ALTER SEQUENCE media_id_seq OWNED BY media.id;
 
 CREATE TABLE options (
     id integer NOT NULL,
-    site_title character varying,
-    site_description character varying,
-    site_domain character varying,
-    site_menu text,
-    site_menu_draft text,
-    site_keywords character varying,
-    article_size bigint,
+    option_key character varying,
+    option_value character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -296,7 +291,7 @@ CREATE TABLE users (
     encrypted_password character varying DEFAULT ''::character varying NOT NULL,
     full_name character varying,
     nick_name character varying,
-    avatar_file character varying,
+    avatar_file character varying DEFAULT 'avatar-no.png'::character varying,
     level character varying,
     reset_password_token character varying,
     reset_password_sent_at timestamp without time zone,

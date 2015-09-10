@@ -85,7 +85,3 @@ Rails.application.routes.draw do
  
 end
 
-
-#/**
-#Membuat halaman profile
-#*/
