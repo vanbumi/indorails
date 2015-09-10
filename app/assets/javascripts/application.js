@@ -16,3 +16,4 @@
 // require_tree .  // REQUIRE_TREE DISABLED!!!!!!!!!!!!!!!!!!!!!
 //= require article_single
 //= require search
+//= require forum/root
