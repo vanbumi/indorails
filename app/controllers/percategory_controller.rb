@@ -17,9 +17,9 @@ class PercategoryController < ApplicationController
     permalink = params[:permalink]
     
     if current_user
-      @articles = VArticleCategory.where('cat_slug = ? and publish_status = "Publish"', permalink).order('created_at DESC').paginate(page: params[:page], per_page: app_set('article_size'))
+      @articles = VArticleCategory.where('cat_slug = ? and publish_status = ?', permalink, "Publish").order('created_at DESC').paginate(page: params[:page], per_page: app_set('article_size'))
     else
-      @articles = VArticleCategory.where('cat_slug = ? and publish_status = "Publish" and publish_visibility = "Public"', permalink).order('created_at DESC').paginate(page: params[:page], per_page: app_set('article_size'))
+      @articles = VArticleCategory.where('cat_slug = ? and publish_status = ? and publish_visibility = ?', permalink, "Publish", "Public").order('created_at DESC').paginate(page: params[:page], per_page: app_set('article_size'))
     end
     
   end
