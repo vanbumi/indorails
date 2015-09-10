@@ -5,7 +5,7 @@ class CreateForumArticles < ActiveRecord::Migration
       t.integer :forum_parent_id
       t.string :forum_title
       t.text :forum_body
-      t.integer :member_id
+      t.integer :user_id
       t.string :forum_permalink
       t.integer :forum_category_id
       t.integer :forum_hit
