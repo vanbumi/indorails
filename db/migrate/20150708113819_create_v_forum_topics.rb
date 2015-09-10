@@ -7,7 +7,7 @@ class CreateVForumTopics < ActiveRecord::Migration
         fa.id,
 				fa.forum_title,
         fa.forum_body,
-				fa.member_id,
+				fa.user_id,
           mem.email,
           mem.full_name,
           mem.nick_name,
@@ -24,7 +24,7 @@ class CreateVForumTopics < ActiveRecord::Migration
 			from
 				forum_articles fa
 					left join forum_categories fac on fa.forum_category_id = fac.id
-          left join members mem on fa.member_id =  mem.id
+          left join users mem on fa.user_id =  mem.id
       where
         fa.forum_topic_flag = 1;
 	 	)
