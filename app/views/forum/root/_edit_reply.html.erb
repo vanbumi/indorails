@@ -1,0 +1,16 @@
+<div class="col-lg-2">
+  <%= image_tag('/images/avatar/thumb/'+Member.find(@reply.member_id).avatar_file, style: 'width: 100%') %>
+</div>
+<div class="col-lg-10 mb25">
+  <form id="forum_article_form_<%= @reply.id %>">
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+    <input type="text" value="<%= @reply.id %>" name="forum_article[id]" style="display: none;">
+    <div class="form-group">
+      <textarea class="form-control" name="forum_article[forum_body]"><%= @reply.forum_body %></textarea>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" onclick="forum_root.edit_reply_patch(<%= @reply.id %>); return false;">Save</button>
+      <button class="btn btn-default" onclick="forum_root.single_reply_element(<%= @reply.id %>); return false;">Cancel</button>
+    </div>
+  </form>
+</div>

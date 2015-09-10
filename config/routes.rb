@@ -17,6 +17,26 @@ Rails.application.routes.draw do
 
 	post 'discuss/send_insert', to: 'discuss#send_insert'
   
+  namespace :forum do
+    get    '/',                     to: 'root#index'
+    get    'search',                to: 'root#search'
+    get    'new_topic',             to: 'root#new_topic'
+    post   'new_topic_save',        to: 'root#new_topic_save'
+    get    ':id/single_topic_ajax', to: 'root#single_topic_ajax' # ajax
+    get    ':id/edit_topic',        to: 'root#edit_topic' # ajax
+    patch  ':id/edit_topic_post',   to: 'root#edit_topic_post' # ajax
+    delete ':id/delete_topic',      to: 'root#delete_topic'
+    get    ':id/single_reply_ajax', to: 'root#single_reply_ajax' # ajax
+    post   ':id/reply_topic',       to: 'root#reply_topic' # ajax
+    get    ':id/edit_reply',        to: 'root#edit_reply' # ajax
+    patch  ':id/edit_reply_patch',  to: 'root#edit_reply_patch' # ajax
+    delete ':id/reply_delete',      to: 'root#reply_delete' # ajax
+    
+    get    ':forum_cat_slug', to: 'root#per_category'
+    
+    get    ':forum_cat_slug/:id/:forum_permalink', to: 'root#one_topic'
+  end
+  
 	#---------------------------
 
   namespace :adm do

@@ -1,0 +1,27 @@
+<div class="col-lg-2">
+  <%= image_tag('/images/avatar/thumb/'+Member.find(@forum_article.member_id).avatar_file, style: 'width: 100%') %>
+</div>
+
+<div class="form-horizontal col-lg-10">
+  <%= form_for @forum_article, url: '/forum/'+@id.to_s+'/edit_topic_post', remote: true do |f| %>
+  <div class="form-group">
+    <label class="col-lg-3">Title</label>
+    <div class="col-lg-9">
+      <%= f.text_field :forum_title, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-lg-3">Body</label>
+    <div class="col-lg-9">
+      <%= f.text_area :forum_body, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-lg-3">&nbsp;</label>
+    <div class="col-lg-9">
+      <button class="btn btn-primary" onclick="forum_root.edit_topic_post(<%= @id %>);return false;">Save</button>
+      <button class="btn btn-default" onclick="forum_root.single_topic_for_ajax(<%= @id %>); return false;">Cancel</button>
+    </div>
+  </div>
+  <% end %>
+</div>

@@ -1,0 +1,6 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" id="head_forum_all"><a href="/forum">All Topics</a></li>
+  <% @forum_categories.each do |foca| %>
+    <li role="presentation" id="head_forum_<%= foca.forum_cat_slug %>"><a href="/forum/<%= foca.forum_cat_slug %>"><%= foca.forum_cat_name %></a></li>
+  <% end %>
+</ul>
