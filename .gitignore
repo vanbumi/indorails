@@ -20,4 +20,4 @@ config/database.yml
 
 nbproject
 
-Gemfile
+Gemfile.lock

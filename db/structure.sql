@@ -171,6 +171,78 @@ ALTER SEQUENCE discusses_id_seq OWNED BY discusses.id;
 
 
 --
+-- Name: forum_articles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE forum_articles (
+    id integer NOT NULL,
+    forum_topic_flag integer,
+    forum_parent_id integer,
+    forum_title character varying,
+    forum_body text,
+    user_id integer,
+    forum_permalink character varying,
+    forum_category_id integer,
+    forum_hit integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: forum_articles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE forum_articles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: forum_articles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE forum_articles_id_seq OWNED BY forum_articles.id;
+
+
+--
+-- Name: forum_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE forum_categories (
+    id integer NOT NULL,
+    forum_cat_name character varying,
+    forum_cat_description text,
+    forum_cat_slug character varying,
+    forum_cat_count integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: forum_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE forum_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: forum_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE forum_categories_id_seq OWNED BY forum_categories.id;
+
+
+--
 -- Name: media; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -418,6 +490,89 @@ CREATE VIEW v_discusses AS
 
 
 --
+-- Name: v_forum_articles; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_forum_articles AS
+ SELECT fa.id,
+    fa.forum_topic_flag,
+    fa.forum_parent_id,
+    fa.forum_title,
+    fa.forum_body,
+    fa.user_id,
+    mem.email,
+    mem.full_name,
+    mem.nick_name,
+    fa.forum_permalink,
+    fa.forum_category_id,
+    fac.forum_cat_name,
+    fac.forum_cat_description,
+    fac.forum_cat_slug,
+    fac.forum_cat_count,
+    concat(fa.forum_title, ' ', fa.forum_body) AS forum_article_all,
+    fa.created_at,
+    fa.updated_at
+   FROM ((forum_articles fa
+     LEFT JOIN forum_categories fac ON ((fa.forum_category_id = fac.id)))
+     LEFT JOIN users mem ON ((fa.user_id = mem.id)));
+
+
+--
+-- Name: v_forum_replies; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_forum_replies AS
+ SELECT fa.id,
+    fa.forum_parent_id,
+    fa.forum_body,
+    fa.user_id,
+    mem.email,
+    mem.full_name,
+    mem.nick_name,
+    fa.forum_category_id,
+    fac.forum_cat_name,
+    fac.forum_cat_description,
+    fac.forum_cat_slug,
+    fac.forum_cat_count,
+    fa.created_at,
+    fa.updated_at
+   FROM ((forum_articles fa
+     LEFT JOIN forum_categories fac ON ((fa.forum_category_id = fac.id)))
+     LEFT JOIN users mem ON ((fa.user_id = mem.id)))
+  WHERE (fa.forum_topic_flag = 0);
+
+
+--
+-- Name: v_forum_topics; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_forum_topics AS
+ SELECT fa.id,
+    fa.forum_title,
+    fa.forum_body,
+    fa.user_id,
+    mem.email,
+    mem.full_name,
+    mem.nick_name,
+    fa.forum_permalink,
+    fa.forum_category_id,
+    fac.forum_cat_name,
+    fac.forum_cat_description,
+    fac.forum_cat_slug,
+    fac.forum_cat_count,
+    fa.forum_hit,
+    ( SELECT count(*) AS count
+           FROM forum_articles
+          WHERE ((forum_articles.forum_parent_id = fa.id) AND (forum_articles.forum_topic_flag = 0))) AS reply_count,
+    fa.created_at,
+    fa.updated_at
+   FROM ((forum_articles fa
+     LEFT JOIN forum_categories fac ON ((fa.forum_category_id = fac.id)))
+     LEFT JOIN users mem ON ((fa.user_id = mem.id)))
+  WHERE (fa.forum_topic_flag = 1);
+
+
+--
 -- Name: v_pages; Type: VIEW; Schema: public; Owner: -
 --
 
@@ -468,6 +623,20 @@ ALTER TABLE ONLY categories ALTER COLUMN id SET DEFAULT nextval('categories_id_s
 --
 
 ALTER TABLE ONLY discusses ALTER COLUMN id SET DEFAULT nextval('discusses_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY forum_articles ALTER COLUMN id SET DEFAULT nextval('forum_articles_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY forum_categories ALTER COLUMN id SET DEFAULT nextval('forum_categories_id_seq'::regclass);
 
 
 --
@@ -528,6 +697,22 @@ ALTER TABLE ONLY categories
 
 ALTER TABLE ONLY discusses
     ADD CONSTRAINT discusses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: forum_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY forum_articles
+    ADD CONSTRAINT forum_articles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: forum_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY forum_categories
+    ADD CONSTRAINT forum_categories_pkey PRIMARY KEY (id);
 
 
 --
@@ -618,4 +803,14 @@ INSERT INTO schema_migrations (version) VALUES ('20150611044525');
 INSERT INTO schema_migrations (version) VALUES ('20150614015305');
 
 INSERT INTO schema_migrations (version) VALUES ('20150614015307');
+
+INSERT INTO schema_migrations (version) VALUES ('20150707142801');
+
+INSERT INTO schema_migrations (version) VALUES ('20150707144138');
+
+INSERT INTO schema_migrations (version) VALUES ('20150708113819');
+
+INSERT INTO schema_migrations (version) VALUES ('20150710092732');
+
+INSERT INTO schema_migrations (version) VALUES ('20150711092115');
 
