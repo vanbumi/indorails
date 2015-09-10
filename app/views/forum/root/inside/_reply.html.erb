@@ -7,8 +7,8 @@
     <%= @reply.forum_body.html_safe %>
   </article>
   <div class="form-group">
-    <% if current_member %>
-      <% if current_member.id == @reply.member_id %>
+    <% if current_user %>
+      <% if current_user.id == @reply.member_id %>
         <button class="btn btn-default" onclick="forum_root.edit_reply(<%= @reply.id %>);">Edit</button>
         <button class="btn btn-default" onclick="forum_root.reply_delete(<%= @reply.id %>);">Delete</button>
       <% end %>

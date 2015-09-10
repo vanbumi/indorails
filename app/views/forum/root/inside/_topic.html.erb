@@ -14,18 +14,18 @@
   
   <!-- buttons -->
   <div class="mt20">
-    <% if current_member %>
-      <% if current_member.id == @topic.member_id %>
+    <% if current_user %>
+      <% if current_user.id == @topic.member_id %>
         <button class="btn btn-primary btn-sm" onclick="forum_root.edit_topic(<%= @topic.id %>);">Edit</button>
       <% end  %>
     <% end %>
 
-    <% if current_member %>
+    <% if current_user %>
       <a href="/forum/<%=  @topic.forum_cat_slug %>/<%= @topic.id %>/<%= @topic.forum_permalink %>#reply_form_section" class="btn btn-default btn-sm">Reply</a>
     <% end %>
 
-    <% if current_member %>
-      <% if current_member.id == @topic.member_id %>
+    <% if current_user %>
+      <% if current_user.id == @topic.member_id %>
         <button class="btn btn-default btn-sm" onclick="forum_root.delete_topic(<%= @topic.id %>);">Delete</button>
       <% end %>
     <% end %>
