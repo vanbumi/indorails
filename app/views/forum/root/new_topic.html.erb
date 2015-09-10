@@ -1,0 +1,74 @@
+<%= render "support/fixed_nav" %>
+
+<div id="forum_new_post">
+  <div class='container'>
+    <h1>New Topic</h1>
+  </div>
+  <div class='container'>
+    <%= form_for @forum_article, url: '/forum/new_topic_save' do |f| %>
+      <% if @forum_article.errors.any? %>
+        <div id="errors" class="alert alert-danger">
+          <h2 class="mt5 mb5"><%= pluralize(@forum_article.errors.count, "error") %> prevent this post from saving</h2>
+          <ul>
+            <% @forum_article.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
+      <!-- title -->
+      <div class='col-lg-12 pl0'>
+        
+        <!-- title -->
+        <div class="form-group w100 mb10 dis-table">
+          <label class="col-lg-3 pl0">Title</label>
+          <div class='col-lg-9'>
+            <%= f.text_field :forum_title, class: 'form-control', placeholder: 'Title' %>
+          </div>
+        </div>
+        
+        <!-- body -->
+        <div class="form-group w100 mb10 dis-table">
+          <label class="col-lg-3 pl0">Body</label>
+          <div class='col-lg-9'>
+            <%= f.text_area :forum_body, class: 'form-control', placeholder: 'Body' %>
+          </div>
+        </div>
+       
+        <!-- category -->
+        <div class="form-group w100 mb10 dis-table">
+          <label class="col-lg-3 pl0">Category</label>
+          <div class='col-lg-9'>
+            <select name="forum_article[forum_category_id]" id="forum_forum_category_id" class="form-control">
+              <% @forum_categories.each do |focat| %>
+                <% if focat.id == @forum_article.forum_category_id %>
+                  <% @sele = "selected" %>
+                <% end %>
+                <option value='<%= focat.id %>' <%= @sele %>><%= focat.forum_cat_name %></option>  
+              <% end %>
+            </select>
+          </div>
+        </div>
+        
+        <!--  -->
+        <div class="form-group w100 mb10 dis-table">
+          <label class="col-lg-3 pl0">&nbsp;</label>
+          <div class='col-lg-9'>
+            <input type="submit" class="btn btn-primary" value="Save">
+            <%= link_to "Cancel", '/forum', class: "btn btn-default" %>
+          </div>
+        </div>
+      </div>
+    <% end %> <!-- /form -->
+  </div>
+</div>
+
+<%= render "support/footer" %>
+
+<script>
+  ncore.load();
+  ncore.cart_count();
+  ncore.active_nav('nav-forum');
+  forum_root.page_onload('<%= @head_active %>');
+</script>

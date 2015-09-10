@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+  <div class="panel-heading">Search Forum</div>
+  <div class="panel-body">
+    <form action="/forum/search" method="get">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" value="<%= @q %>">
+        <span class="input-group-btn">
+          <input type="submit" value="Search" class="btn btn-default">
+        </span>
+      </div>
+    </form>
+  </div>
+</div>

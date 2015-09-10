@@ -1,0 +1,40 @@
+<div class="col-lg-2">
+  <%= image_tag('/images/avatar/thumb/'+Member.find(@topic.member_id).avatar_file, style: 'width: 100%') %>
+</div>
+<div class="col-lg-7">
+  <h3>
+    <a href="/forum/<%=  @topic.forum_cat_slug %>/<%= @topic.id %>/<%= @topic.forum_permalink %>">
+      <%= @topic.forum_title %>
+    </a>
+  </h3>
+  <div>
+    <%= (sanitize(@topic.forum_body)).gsub(/\W/,' ')[0..300] %>
+    <a href="/forum/<%=  @topic.forum_cat_slug %>/<%= @topic.id %>/<%= @topic.forum_permalink %>">[...]</a>
+  </div>
+  
+  <!-- buttons -->
+  <div class="mt20">
+    <% if current_member %>
+      <% if current_member.id == @topic.member_id %>
+        <button class="btn btn-primary btn-sm" onclick="forum_root.edit_topic(<%= @topic.id %>);">Edit</button>
+      <% end  %>
+    <% end %>
+
+    <% if current_member %>
+      <a href="/forum/<%=  @topic.forum_cat_slug %>/<%= @topic.id %>/<%= @topic.forum_permalink %>#reply_form_section" class="btn btn-default btn-sm">Reply</a>
+    <% end %>
+
+    <% if current_member %>
+      <% if current_member.id == @topic.member_id %>
+        <button class="btn btn-default btn-sm" onclick="forum_root.delete_topic(<%= @topic.id %>);">Delete</button>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="col-lg-3 t-center">
+  <h4><%= @topic.reply_count %> replies</h4>
+  <p>
+    Started by <%= @topic.nick_name %><br>
+    <%= last_reply_member_nick_name(@topic.id) %>
+  </p>
+</div>

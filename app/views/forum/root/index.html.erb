@@ -1,0 +1,46 @@
+<%= render "support/fixed_nav" %>
+
+<div id="forum_root" class="pt70">
+  <div class="container">
+    <%= render partial: 'forum/support/forum_head' %>
+  </div>
+  <div class='container'>
+    
+    <%= render partial: 'forum/support/forum_nav_head' %>
+    
+    <div class="col-lg-12 pl0 pr0 pt20">
+      
+      <div class="col-lg-9 pl0">
+        <div class="col-lg-12 pl0 pr0">
+          <%= will_paginate @topics %>
+        </div>
+        
+        <% @topics.each do |topic| %>
+          <div id="topic_<%= topic.id %>" class="col-lg-12 pl0 pr0 mt10 mb10 pt10 pb10" style="border: 1px solid #eaeaea;">
+            <% @topic = topic %>
+            <%= render partial: 'forum/root/inside/topic' %>
+          </div>
+        <% end %>
+        
+        <div class="col-lg-12 pl0 pr0">
+          <%= will_paginate @topics %>
+        </div>
+        
+      </div>
+      <div class="col-lg-3">
+        <%= render partial: 'forum/support/search_form' %>
+        <%= render partial: 'forum/support/new_topic_button' %>
+        <%= render partial: 'forum/support/popular_topics' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render "support/footer" %>
+
+<script>
+  ncore.load();
+  ncore.cart_count();
+  ncore.active_nav('nav-forum');
+  forum_root.page_onload('<%= @head_active %>');
+</script>
