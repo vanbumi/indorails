@@ -374,7 +374,10 @@ CREATE TABLE users (
     confirmation_sent_at timestamp without time zone,
     unconfirmed_email character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    full_name character varying,
+    nick_name character varying,
+    level character varying
 );
 
 
@@ -395,6 +398,202 @@ CREATE SEQUENCE users_id_seq
 --
 
 ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: v_article_categories; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_article_categories AS
+ SELECT article_categories.id,
+    article_categories.article_id,
+    articles.title,
+    articles.body,
+    articles.author_id,
+    ( SELECT users.full_name
+           FROM users
+          WHERE (users.id = articles.author_id)) AS full_name,
+    ( SELECT users.nick_name
+           FROM users
+          WHERE (users.id = articles.author_id)) AS nick_name,
+    articles.permalink,
+    articles.excerp,
+    articles.feat_img,
+    articles.comment_status,
+    articles.publish_status,
+    articles.publish_visibility,
+    articles.article_vcount,
+    articles.created_at,
+    articles.updated_at,
+    article_categories.category_id,
+    categories.cat_name,
+    categories.cat_slug,
+    categories.cat_count,
+    concat(articles.title, ' ', articles.body, ' ', articles.permalink, ' ', articles.excerp, ' ', categories.cat_name) AS article_all
+   FROM ((article_categories
+     LEFT JOIN categories ON ((article_categories.category_id = categories.id)))
+     LEFT JOIN articles ON ((article_categories.article_id = articles.id)));
+
+
+--
+-- Name: v_articles; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_articles AS
+ SELECT articles.id,
+    articles.title,
+    articles.body,
+    articles.author_id,
+    users.full_name,
+    users.nick_name,
+    articles.permalink,
+    articles.excerp,
+    articles.feat_img,
+    articles.comment_status,
+    articles.publish_status,
+    articles.publish_visibility,
+    articles.article_type,
+    articles.article_vcount,
+    concat(articles.title, ' ', articles.body, ' ', articles.permalink, ' ', articles.excerp) AS article_all,
+    articles.created_at,
+    articles.updated_at
+   FROM (articles
+     LEFT JOIN users ON ((articles.author_id = users.id)))
+  WHERE ((articles.article_type)::text = 'Article'::text);
+
+
+--
+-- Name: v_discusses; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_discusses AS
+ SELECT discusses.id,
+    discusses.article_id,
+    articles.title,
+    articles.permalink,
+    articles.excerp,
+    articles.feat_img,
+    articles.comment_status,
+    discusses.user_id,
+    users.email,
+    users.full_name,
+    users.nick_name,
+    users.level,
+    discusses.dis_body,
+    discusses.dis_approve,
+    discusses.created_at,
+    discusses.updated_at
+   FROM ((discusses
+     LEFT JOIN users ON ((discusses.user_id = users.id)))
+     LEFT JOIN articles ON ((discusses.article_id = articles.id)));
+
+
+--
+-- Name: v_forum_articles; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_forum_articles AS
+ SELECT fa.id,
+    fa.forum_topic_flag,
+    fa.forum_parent_id,
+    fa.forum_title,
+    fa.forum_body,
+    fa.user_id,
+    mem.email,
+    mem.full_name,
+    mem.nick_name,
+    fa.forum_permalink,
+    fa.forum_category_id,
+    fac.forum_cat_name,
+    fac.forum_cat_description,
+    fac.forum_cat_slug,
+    fac.forum_cat_count,
+    concat(fa.forum_title, ' ', fa.forum_body) AS forum_article_all,
+    fa.created_at,
+    fa.updated_at
+   FROM ((forum_articles fa
+     LEFT JOIN forum_categories fac ON ((fa.forum_category_id = fac.id)))
+     LEFT JOIN users mem ON ((fa.user_id = mem.id)));
+
+
+--
+-- Name: v_forum_replies; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_forum_replies AS
+ SELECT fa.id,
+    fa.forum_parent_id,
+    fa.forum_body,
+    fa.user_id,
+    mem.email,
+    mem.full_name,
+    mem.nick_name,
+    fa.forum_category_id,
+    fac.forum_cat_name,
+    fac.forum_cat_description,
+    fac.forum_cat_slug,
+    fac.forum_cat_count,
+    fa.created_at,
+    fa.updated_at
+   FROM ((forum_articles fa
+     LEFT JOIN forum_categories fac ON ((fa.forum_category_id = fac.id)))
+     LEFT JOIN users mem ON ((fa.user_id = mem.id)))
+  WHERE (fa.forum_topic_flag = 0);
+
+
+--
+-- Name: v_forum_topics; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_forum_topics AS
+ SELECT fa.id,
+    fa.forum_title,
+    fa.forum_body,
+    fa.user_id,
+    mem.email,
+    mem.full_name,
+    mem.nick_name,
+    fa.forum_permalink,
+    fa.forum_category_id,
+    fac.forum_cat_name,
+    fac.forum_cat_description,
+    fac.forum_cat_slug,
+    fac.forum_cat_count,
+    fa.forum_hit,
+    ( SELECT count(*) AS count
+           FROM forum_articles
+          WHERE ((forum_articles.forum_parent_id = fa.id) AND (forum_articles.forum_topic_flag = 0))) AS reply_count,
+    fa.created_at,
+    fa.updated_at
+   FROM ((forum_articles fa
+     LEFT JOIN forum_categories fac ON ((fa.forum_category_id = fac.id)))
+     LEFT JOIN users mem ON ((fa.user_id = mem.id)))
+  WHERE (fa.forum_topic_flag = 1);
+
+
+--
+-- Name: v_pages; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_pages AS
+ SELECT articles.id,
+    articles.title,
+    articles.body,
+    articles.author_id,
+    users.full_name,
+    users.nick_name,
+    articles.permalink,
+    articles.excerp,
+    articles.feat_img,
+    articles.comment_status,
+    articles.publish_status,
+    articles.publish_visibility,
+    articles.article_type,
+    articles.created_at,
+    articles.updated_at
+   FROM (articles
+     LEFT JOIN users ON ((articles.author_id = users.id)))
+  WHERE ((articles.article_type)::text = 'Page'::text);
 
 
 --
@@ -581,7 +780,7 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 SET search_path TO "$user",public;
 
-INSERT INTO schema_migrations (version) VALUES ('20141230104903');
+INSERT INTO schema_migrations (version) VALUES ('20140912013330');
 
 INSERT INTO schema_migrations (version) VALUES ('20141230120303');
 
@@ -620,8 +819,4 @@ INSERT INTO schema_migrations (version) VALUES ('20150708113819');
 INSERT INTO schema_migrations (version) VALUES ('20150710092732');
 
 INSERT INTO schema_migrations (version) VALUES ('20150711092115');
-
-INSERT INTO schema_migrations (version) VALUES ('20150912010302');
-
-INSERT INTO schema_migrations (version) VALUES ('20150912013330');
 
