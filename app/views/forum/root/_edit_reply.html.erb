@@ -1,5 +1,5 @@
 <div class="col-lg-2">
-  <%= image_tag('/images/avatar/thumb/'+Member.find(@reply.user_id).avatar_file, style: 'width: 100%') %>
+  <%= image_tag('/images/avatar/thumb/'+User.find(@reply.user_id).avatar_file, style: 'width: 100%') %>
 </div>
 <div class="col-lg-10 mb25">
   <form id="forum_article_form_<%= @reply.id %>">
