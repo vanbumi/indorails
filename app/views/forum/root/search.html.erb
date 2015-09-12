@@ -1,6 +1,9 @@
+<%= render 'widget/head_top' %>
 
 
-<div id="forum_root" class="pt70">
+<section class="container back-white pl0 pr0">
+  <%= render "widget/nav" %>
+
   <div class="container">
     <%= render partial: 'forum/support/forum_head' %>
   </div>
@@ -52,13 +55,13 @@
       <% end %>
       
       <div class="col-lg-3">
-        <%#= render partial: 'forum/support/search_form' %>
-        <%#= render partial: 'forum/support/new_topic_button' %>
+        <%= render partial: 'forum/support/search_form' %>
+        <%= render partial: 'forum/support/new_topic_button' %>
         <%#= render partial: 'forum/support/popular_topics' %>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 
 <script>
