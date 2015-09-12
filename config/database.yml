@@ -12,6 +12,6 @@ development:
   encoding: unicode
   database: indorails_dev
   pool: 5
-  username: postgres_dev
-  password: 1234
+  username: postgres
+  password: Indorails1945
   host: localhost

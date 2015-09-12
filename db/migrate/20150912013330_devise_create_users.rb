@@ -32,6 +32,10 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
 
       t.timestamps null: false
+
+      t.string :full_name
+      t.string :nick_name
+      t.string :level
     end
 
     add_index :users, :email,                unique: true
