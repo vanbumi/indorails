@@ -35,6 +35,6 @@
   <h4><%= @topic.reply_count %> replies</h4>
   <p>
     Started by <%= @topic.nick_name %><br>
-    <%= last_reply_member_nick_name(@topic.id) %>
+    <%= last_reply_user_nick_name(@topic.id) %>
   </p>
 </div>

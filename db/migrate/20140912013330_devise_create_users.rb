@@ -36,6 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :full_name
       t.string :nick_name
       t.string :level
+      t.string :avatar_file, default: "default.png"
     end
 
     add_index :users, :email,                unique: true

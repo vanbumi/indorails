@@ -57,12 +57,13 @@
       <div class="col-lg-3">
         <%= render partial: 'forum/support/search_form' %>
         <%= render partial: 'forum/support/new_topic_button' %>
-        <%#= render partial: 'forum/support/popular_topics' %>
+        <%= render partial: 'forum/support/popular_topics' %>
       </div>
     </div>
   </div>
 </section>
 
+<%= render "widget/footer" %>
 
 <script>
   ncore.load();
