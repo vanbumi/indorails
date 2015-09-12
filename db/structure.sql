@@ -369,6 +369,10 @@ CREATE TABLE users (
     last_sign_in_at timestamp without time zone,
     current_sign_in_ip inet,
     last_sign_in_ip inet,
+    confirmation_token character varying,
+    confirmed_at timestamp without time zone,
+    confirmation_sent_at timestamp without time zone,
+    unconfirmed_email character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -544,6 +548,13 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_confirmation_token ON users USING btree (confirmation_token);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -611,4 +622,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150710092732');
 INSERT INTO schema_migrations (version) VALUES ('20150711092115');
 
 INSERT INTO schema_migrations (version) VALUES ('20150912010302');
+
+INSERT INTO schema_migrations (version) VALUES ('20150912013330');
 
