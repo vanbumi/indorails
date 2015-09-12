@@ -15,7 +15,7 @@ Devise.setup do |config|
   config.mailer_sender = 'info@indorails.com'
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'Devise::Mailer'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
@@ -99,7 +99,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = '2c35b3d9f6bf63d0f82312ed08c5f79f90bcfdb94622c531e10c3062c15392d7ee9d4262d31f6e1338d3b0cc3656698cee2f6fcc867c222107258bf963cdc5eb'
+  config.pepper = '2c35b3d9f6bf63d0f82312ed08c5f79f90bcfdb94622c531e10c3062c15392d7ee9d4262d31f6e1338d3b0cc3656698cee2f6fcc867c222107258bf963cdc5eb'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
