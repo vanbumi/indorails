@@ -13,7 +13,7 @@
 /tmp
 
 
-/structure/database.sql
+/db/database.sql
 
 # Ignore database configuration
 /config/database.yml
