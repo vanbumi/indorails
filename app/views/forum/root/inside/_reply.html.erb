@@ -1,5 +1,5 @@
 <div class="col-lg-2">
-  <%= image_tag('/images/avatar/thumb/'+Member.find(@reply.member_id).avatar_file, style: 'width: 100%') %>
+  <%= image_tag('/images/avatar/thumb/'+Member.find(@reply.user_id).avatar_file, style: 'width: 100%') %>
 </div>
 <div class="col-lg-10 mb25" style="border: 1px solid #eaeaea;">
   <h4><%= @reply.nick_name %> says </h4>
@@ -8,7 +8,7 @@
   </article>
   <div class="form-group">
     <% if current_user %>
-      <% if current_user.id == @reply.member_id %>
+      <% if current_user.id == @reply.user_id %>
         <button class="btn btn-default" onclick="forum_root.edit_reply(<%= @reply.id %>);">Edit</button>
         <button class="btn btn-default" onclick="forum_root.reply_delete(<%= @reply.id %>);">Delete</button>
       <% end %>

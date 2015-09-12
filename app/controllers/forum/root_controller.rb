@@ -55,7 +55,7 @@ class Forum::RootController < ApplicationController
   # get forum/new_topic<br>
   # Showing new topic for forum
   def new_topic
-    if(current_member)
+    if(current_user)
       @forum_article = ForumArticle.new
       @forum_categories = ForumCategory.all.order('forum_cat_name')
     else
@@ -66,14 +66,14 @@ class Forum::RootController < ApplicationController
   # post forum/new_topic_save<br>
   # Save new topic
   def new_topic_save
-    if current_member
+    if current_user
       @fa                     = ForumArticle.new
       @fa.forum_topic_flag    = 1
       @fa.forum_title         = params[:forum_article][:forum_title]
       @fa.forum_permalink     = params[:forum_article][:forum_title].downcase.gsub!(/\W/,'-')
       @fa.forum_body          = params[:forum_article][:forum_body]
       @fa.forum_category_id   = params[:forum_article][:forum_category_id]
-      @fa.member_id           = current_member.id
+      @fa.user_id             = current_user.id
       @fa_save                = @fa.save
       
       @vfa = VForumTopic.where(id: @fa.id).take
@@ -97,7 +97,7 @@ class Forum::RootController < ApplicationController
   # get ':id/edit_topic', to: 'root#edit_topic'
   def edit_topic
     # edit topic hanya dapat diakses oleh member
-    if(current_member)
+    if(current_user)
       @id = params[:id].to_i
       @forum_article = ForumArticle.find(@id)
       render partial: 'edit_topic'
@@ -110,11 +110,11 @@ class Forum::RootController < ApplicationController
   # *Proses*
   # * Pastikan yang mengedit adalah user itu sendiri
   def edit_topic_post
-    if current_member 
+    if current_user 
       @id = params[:id].to_i
       @forum_article = ForumArticle.find(@id)
       
-      if current_member.id == @forum_article.member_id
+      if current_user.id == @forum_article.user_id
         @forum_article.forum_title = params[:forum_article][:forum_title]
         @forum_article.forum_body = params[:forum_article][:forum_body]
         @forum_article.save
@@ -165,7 +165,7 @@ class Forum::RootController < ApplicationController
     @fnx.forum_topic_flag = 0
     @fnx.forum_parent_id = @id
     @fnx.forum_body = secure_body(@body)
-    @fnx.member_id = current_member.id
+    @fnx.user_id = current_user.id
     @fnx.save
     
     # kembalikan
@@ -183,7 +183,7 @@ class Forum::RootController < ApplicationController
   
   # patch ':id/edit_reply_patch', to: 'root#edit_reply_patch' # ajax
   def edit_reply_patch
-    if current_member
+    if current_user
       @id = params[:forum_article][:id].to_i
       @body = params[:forum_article][:forum_body]
       
@@ -200,13 +200,13 @@ class Forum::RootController < ApplicationController
   
   # delete ':id/reply_delete', to: 'root#reply_delete' # ajax
   def reply_delete
-    if current_member
+    if current_user
       @id = params[:id].to_i
       
       # periksa pemilik
       @periksa = ForumArticle.find(@id)
       
-      if @periksa.member_id == current_member.id
+      if @periksa.user_id == current_user.id
         @periksa.destroy
         render inline: 'success'
       else
@@ -225,11 +225,11 @@ class Forum::RootController < ApplicationController
   # * Delete terlebih dahulu reply dari topic
   # * Setelah itu, baru delete topic nya
   def delete_topic
-    if current_member
+    if current_user
       @id = params[:id].to_i
       @fa = ForumArticle.find(@id)
       
-      if @fa.member_id == current_member.id
+      if @fa.user_id == current_user.id
         # delete terlebih dahulu reply-nya
         ForumArticle.where('forum_parent_id = ?',@id).destroy_all 
         
