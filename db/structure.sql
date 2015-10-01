@@ -377,7 +377,8 @@ CREATE TABLE users (
     updated_at timestamp without time zone NOT NULL,
     full_name character varying,
     nick_name character varying,
-    level character varying
+    level character varying,
+    avatar_file character varying DEFAULT 'default.png'::character varying
 );
 
 
