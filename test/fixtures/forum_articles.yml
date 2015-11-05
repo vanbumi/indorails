@@ -1,0 +1,38 @@
+one:
+    id: 1
+    forum_topic_flag: 1
+    forum_parent_id: 0
+    forum_title: "Saya bertanya tentang Ruby"
+    forum_body: "Ini adalah forum body bertanya tentang Ruby"
+    user_id: 1
+    forum_permalink: "saya_bertanya_tentang_ruby"
+    forum_category_id: 1
+    forum_hit: 20
+    created_at: "2015-01-01 00:00:00"
+    updated_at: "2015-01-01 00:00:00"
+
+two:
+    id: 2
+    forum_topic_flag: 0
+    forum_parent_id: 1
+    forum_title: 
+    forum_body: "Ini adalah forum body bertanya tentang Ruby"
+    user_id: 2
+    forum_permalink: 
+    forum_category_id: 
+    forum_hit: 
+    created_at: "2015-01-01 00:00:00"
+    updated_at: "2015-01-01 00:00:00"
+    
+three:
+    id: 3
+    forum_topic_flag: 0
+    forum_parent_id: 1
+    forum_title: 
+    forum_body: "Ini adalah Jawaban udin"
+    user_id: 1
+    forum_permalink: 
+    forum_category_id: 
+    forum_hit: 
+    created_at: "2015-01-01 00:00:00"
+    updated_at: "2015-01-01 00:00:00"

@@ -1,6 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-article_first:
+one:
   title: Ini adalah title pertama
   body: body yang dituliskan bla-bla-bla
   author_id: 2
@@ -13,7 +13,7 @@ article_first:
   article_type: "Article"
   article_vcount: 1
 
-article_second:
+two:
   title: Ini adalah title kedua
   body: body ble-ble-ble coy
   author_id: 2
@@ -26,7 +26,7 @@ article_second:
   article_type: "Article"
   article_vcount: 1
   
-article_third:
+three:
   title: Ini adalah title ketiga
   body: body ble-ble-ble coy
   author_id: 2
