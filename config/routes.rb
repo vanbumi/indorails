@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
 	post 'discuss/send_insert', to: 'discuss#send_insert'
   
+  get 'clippings/index'
+  
   namespace :forum do
     get    'index',                     to: 'root#index'
     get    'search',                to: 'root#search'

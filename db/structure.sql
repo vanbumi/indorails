@@ -137,6 +137,39 @@ ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
 
 
 --
+-- Name: clippings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE clippings (
+    id integer NOT NULL,
+    clipping_title character varying,
+    clipping_description text,
+    clipping_url text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: clippings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE clippings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: clippings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE clippings_id_seq OWNED BY clippings.id;
+
+
+--
 -- Name: discusses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -622,6 +655,13 @@ ALTER TABLE ONLY categories ALTER COLUMN id SET DEFAULT nextval('categories_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY clippings ALTER COLUMN id SET DEFAULT nextval('clippings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY discusses ALTER COLUMN id SET DEFAULT nextval('discusses_id_seq'::regclass);
 
 
@@ -689,6 +729,14 @@ ALTER TABLE ONLY articles
 
 ALTER TABLE ONLY categories
     ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: clippings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY clippings
+    ADD CONSTRAINT clippings_pkey PRIMARY KEY (id);
 
 
 --
@@ -820,4 +868,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150708113819');
 INSERT INTO schema_migrations (version) VALUES ('20150710092732');
 
 INSERT INTO schema_migrations (version) VALUES ('20150711092115');
+
+INSERT INTO schema_migrations (version) VALUES ('20151106000424');
 

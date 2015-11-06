@@ -1,0 +1,11 @@
+one:
+    id: 1
+    clipping_title: Link To
+    clipping_description: Dokumentasi tentang link to
+    clipping_url: http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html
+
+two:
+    id: 2
+    clipping_title: Helper pada Rails
+    clipping_description: Dokumentasi Rails tentang helper
+    clipping_url: http://api.rubyonrails.org/classes/ActionController/Helpers.html
